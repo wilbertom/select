@@ -11,10 +11,12 @@
 ///   - http://dev.w3.org/csswg/selectors3/
 ///
 
-// All pattern types that we will implement.
+use std::option::Option;
+
+// All sequence types that we will implement.
 // See the [spacification](http://dev.w3.org/csswg/selectors3/#selectors),
 // it has a nice table with what all of this means
-pub enum PatternType {
+pub enum SequenceType {
 
     Star,    // *
     Element, // E
@@ -76,8 +78,17 @@ pub enum PatternType {
     Class,               // E.class-name
     Id,                  // E#some-id
 
+
+    // combinators
     Descendant,          // E F
     Child,               // E > F
     PrecededImmediately, // E + F
     Preceded,            // E ~ F
+}
+
+fn html_pie_eval(expr: &str) -> Option<SequenceType> {
+    match expr {
+        "*" => Some(Star),
+        _ => None
+    }
 }
