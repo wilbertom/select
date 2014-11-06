@@ -1,4 +1,4 @@
 htmlpie
 ===
 
-CSS selector engine.
+CSS selector engine for the future.
