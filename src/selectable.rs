@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 
 pub trait Selectable {
     pub fn star(&self) -> Selectable;
