@@ -82,7 +82,6 @@ pub enum SequenceType {
     Child(&'static str, &'static str),               // E > F
     PrecededImmediately(&'static str, &'static str), // E + F
     Preceded(&'static str, &'static str),            // E ~ F
-
     Unknown
 }
 
@@ -93,50 +92,50 @@ fn html_pie_parse(expr: &'static str) -> SequenceType {
     }
 }
 
-fn html_pie_query<T: Selectable>(st: SequenceType, s: T) -> T {
+fn html_pie_query<T: Selectable>(st: SequenceType, s: T) -> Option<(T)> {
 
     match st {
-        Star => s.star(),
-        Element(e) => s.element(e),
-        Attribute(e, a) => s.has_attribute(e, a),
-        AttributeValue(e, a, v) => s.attribute_with_value(e, a, v),
-        AttributeValueIn(e, a, v) => s.attribute_in(e, a, v),
-        AttributeValueStartsWith(e, a, v) => s.attribute_starts_with(e, a, v),
-        AttributeValueEndsWith(e, a, v) => s.attribute_ends_with(e, a, v),
-        AttributeValueContains(e, a, v) => s.attribute_contains(e, a, v),
-        Root(e) => s.root(e),
-        NthChild(e, i) => s.nth_child(e, i),
-        NthLastChild(e, i) => s.nth_last_child(e, i),
-        NthOfType(e, i) => s.nth_of_type(e, i),
-        NthLastOfType(e, i) => s.nth_last_of_type(e, i),
-        FirstChild(e) => s.first_child(e),
-        LastChild(e) => s.last_child(e),
-        FirstOfType(e) => s.first_of_type(e),
-        LastOfType(e) => s.last_of_type(e),
-        OnlyChild(e) => s.only_child(e),
-        OnlyOfType(e) => s.only_of_type(e),
-        Empty(e) => s.empty(e),
-        Link(e) => s.link(e),
-        Visited(e) => s.visited(e),
-        Active(e) => s.active(e),
-        Hover(e) => s.hover(e),
-        Focus(e) => s.focus(e),
-        Target(e) => s.target(e),
-        Lang(e, l) => s.lang(e, l),
-        Enabled(e) => s.enabled(e),
-        Disabled(e) => s.disabled(e),
-        Checked(e) => s.checked(e),
-        Not(e) => s.not(e),
-        FirstLine(e) => s.first_line(e),
-        FirstLetter(e) => s.first_letter(e),
-        Before(e) => s.before(e),
-        After(e) => s.after(e),
-        Class(e, s_class) => s.class(e, s_class),
-        Id(e, s_id) => s.id(e, s_id),
-        Descendant(e1, e2) => s.descendant(e1, e2),
-        Child(e1, e2) => s.child(e1, e2),
-        PrecededImmediately(e1, e2) => s.preceded_immediately(e1, e2),
-        Preceded(e1, e2) => s.preceded(e1, e2),
-        Unknown => s
+        Star => Some(s.star()),
+        Element(e) => Some(s.element(e)),
+        Attribute(e, a) => Some(s.has_attribute(e, a)),
+        AttributeValue(e, a, v) => Some(s.attribute_with_value(e, a, v)),
+        AttributeValueIn(e, a, v) => Some(s.attribute_in(e, a, v)),
+        AttributeValueStartsWith(e, a, v) => Some(s.attribute_starts_with(e, a, v)),
+        AttributeValueEndsWith(e, a, v) => Some(s.attribute_ends_with(e, a, v)),
+        AttributeValueContains(e, a, v) => Some(s.attribute_contains(e, a, v)),
+        Root(e) => Some(s.root(e)),
+        NthChild(e, i) => Some(s.nth_child(e, i)),
+        NthLastChild(e, i) => Some(s.nth_last_child(e, i)),
+        NthOfType(e, i) => Some(s.nth_of_type(e, i)),
+        NthLastOfType(e, i) => Some(s.nth_last_of_type(e, i)),
+        FirstChild(e) => Some(s.first_child(e)),
+        LastChild(e) => Some(s.last_child(e)),
+        FirstOfType(e) => Some(s.first_of_type(e)),
+        LastOfType(e) => Some(s.last_of_type(e)),
+        OnlyChild(e) => Some(s.only_child(e)),
+        OnlyOfType(e) => Some(s.only_of_type(e)),
+        Empty(e) => Some(s.empty(e)),
+        Link(e) => Some(s.link(e)),
+        Visited(e) => Some(s.visited(e)),
+        Active(e) => Some(s.active(e)),
+        Hover(e) => Some(s.hover(e)),
+        Focus(e) => Some(s.focus(e)),
+        Target(e) => Some(s.target(e)),
+        Lang(e, l) => Some(s.lang(e, l)),
+        Enabled(e) => Some(s.enabled(e)),
+        Disabled(e) => Some(s.disabled(e)),
+        Checked(e) => Some(s.checked(e)),
+        Not(e) => Some(s.not(e)),
+        FirstLine(e) => Some(s.first_line(e)),
+        FirstLetter(e) => Some(s.first_letter(e)),
+        Before(e) => Some(s.before(e)),
+        After(e) => Some(s.after(e)),
+        Class(e, s_class) => Some(s.class(e, s_class)),
+        Id(e, s_id) => Some(s.id(e, s_id)),
+        Descendant(e1, e2) => Some(s.descendant(e1, e2)),
+        Child(e1, e2) => Some(s.child(e1, e2)),
+        PrecededImmediately(e1, e2) => Some(s.preceded_immediately(e1, e2)),
+        Preceded(e1, e2) => Some(s.preceded(e1, e2)),
+        Unknown => None
     }
 }
