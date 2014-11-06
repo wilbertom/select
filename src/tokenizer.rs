@@ -93,7 +93,7 @@ fn html_pie_parse(expr: &'static str) -> SequenceType {
     }
 }
 
-fn html_pie_query(st: SequenceType, s: Selectable) -> Selectable {
+fn html_pie_query<T: Selectable>(st: SequenceType, s: T) -> T {
 
     match st {
         Star => s.star(),
