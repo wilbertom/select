@@ -1,6 +1,6 @@
-extern crate htmlpie;
+extern crate csspie;
 
-use htmlpie::tokenizer::{Token, TokenSink, tokenize};
+use csspie::tokenizer::{Token, TokenSink, tokenize};
 
 #[test]
 fn test_tokenizer_letters() {

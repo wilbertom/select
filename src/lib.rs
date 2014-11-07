@@ -1,5 +1,5 @@
 
-#![crate_name="htmlpie"]
+#![crate_name="csspie"]
 #![crate_type="rlib"]
 
 pub mod tokenizer;
