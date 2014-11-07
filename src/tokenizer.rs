@@ -111,7 +111,7 @@ impl Token {
 #[deriving(PartialEq, Show)]
 pub struct TokenSink {
     pub tokens: Vec<Token>,
-    last_sunk: Option<Token>
+    pub last_sunk: Option<Token>
 }
 
 impl TokenSink {
@@ -128,13 +128,16 @@ impl TokenSink {
 
     pub fn push(&mut self, token: Token) {
 
-        match self.last_sunk {
-            Some(t) => {
-                println!("Should check {}", t)
-            },
-            None => ()
-        }
-
+        // match self.last_sunk {
+        //     Some(t) => {
+        //         println!("Should check {}", t);
+        //     },
+        //     None => {
+        //         println!("Skipping");
+        //     }
+        // }
+        
+        self.last_sunk = Some(token);
         self.tokens.push(token);
 
     }
@@ -183,8 +186,6 @@ pub fn tokenize(input: String) -> TokenSink {
         } else {
 
             let c = tokenizer.current_char();
-
-            println!("Processing {}", c);
 
             let token_kind = if c.is_whitespace() { Whitespace } else {
 
