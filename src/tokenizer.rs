@@ -1,3 +1,4 @@
+use std::option::Option;
 
 #[deriving(PartialEq, Show)]
 pub enum TokenKind {
@@ -19,7 +20,9 @@ pub enum TokenKind {
     Plus,
     OpeningParen,
     ClosingParen,
-    Error
+
+    Word,
+    Integer,
 }
 
 #[deriving(PartialEq, Show)]
@@ -103,23 +106,37 @@ impl Token {
         Token::new(Plus, '+')
     }
 
-
 }
 
 #[deriving(PartialEq, Show)]
 pub struct TokenSink {
-    pub tokens: Vec<Token>
+    pub tokens: Vec<Token>,
+    last_sunk: Option<Token>
 }
 
 impl TokenSink {
     pub fn new() -> TokenSink {
+        TokenSink::from_vec(Vec::new())
+    }
+
+    pub fn from_vec(v: Vec<Token>) -> TokenSink {
         TokenSink {
-            tokens: Vec::new()
+            tokens: v,
+            last_sunk: None
         }
     }
 
     pub fn push(&mut self, token: Token) {
+
+        match self.last_sunk {
+            Some(t) => {
+                println!("Should check {}", t)
+            },
+            None => ()
+        }
+
         self.tokens.push(token);
+
     }
 
     pub fn push_k_v(&mut self, k: TokenKind, v: char) {
@@ -189,7 +206,7 @@ pub fn tokenize(input: String) -> TokenSink {
                     '+' => Plus,
                     '(' => OpeningParen,
                     ')' => ClosingParen,
-                    _ => Error
+                    _ => panic!("Unknown character {} in {}", c, tokenizer.input)
                 }
             };
 
