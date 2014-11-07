@@ -48,7 +48,7 @@ fn test_tokenize_digits() {
 
 #[test]
 fn test_tokenize_specials() {
-    let result = tokenize(String::from_str("*[]=~^$:.#>+"));
+    let result = tokenize(String::from_str("*[]=~^$:.#>+()"));
     let expected = TokenSink {
         tokens: vec![Token::star(),
                      Token::opening_bracket(),
@@ -61,7 +61,9 @@ fn test_tokenize_specials() {
                      Token::dot(),
                      Token::hash_tag(),
                      Token::greater_than(),
-                     Token::plus()]
+                     Token::plus(),
+                     Token::opening_paren(),
+                     Token::closing_paren()]
     };
 
     assert_eq!(result, expected);

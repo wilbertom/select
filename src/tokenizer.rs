@@ -17,6 +17,8 @@ pub enum TokenKind {
     HashTag,
     GreaterThan,
     Plus,
+    OpeningParen,
+    ClosingParen,
     Error
 }
 
@@ -63,6 +65,14 @@ impl Token {
 
     pub fn closing_bracket() -> Token {
         Token::new(ClosingBracket, ']')
+    }
+
+    pub fn opening_paren() -> Token {
+        Token::new(OpeningParen, '(')
+    }
+
+    pub fn closing_paren() -> Token {
+        Token::new(ClosingParen, ')')
     }
 
     pub fn equal() -> Token {
@@ -177,6 +187,8 @@ pub fn tokenize(input: String) -> TokenSink {
                     '#' => HashTag,
                     '>' => GreaterThan,
                     '+' => Plus,
+                    '(' => OpeningParen,
+                    ')' => ClosingParen,
                     _ => Error
                 }
             };
