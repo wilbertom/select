@@ -1,4 +1,3 @@
-use std::option::Option;
 
 #[deriving(PartialEq, Show)]
 pub enum Token {
@@ -20,15 +19,13 @@ pub enum Token {
     OpeningParen,
     Quote,
     Colons,
-    Word(&'static str),
-    Integer(&'static str),
+    Word(String),
+    Integer(String),
 }
-
 
 #[deriving(PartialEq, Show)]
 pub struct TokenSink {
-    pub tokens: Vec<Token>,
-    last_sunk: Option<Token>
+    pub tokens: Vec<Token>
 }
 
 impl TokenSink {
@@ -38,21 +35,15 @@ impl TokenSink {
 
     pub fn from_vec(v: Vec<Token>) -> TokenSink {
         TokenSink {
-            tokens: v,
-            last_sunk: None
+            tokens: v
         }
     }
 
     pub fn push(&mut self, token: Token) {
-
-        self.last_sunk = Some(new_token);
-        self.tokens.push(new_token);
+        self.tokens.push(token);
 
     }
 
-    pub fn push_k_v(&mut self, k: TokenKind, v: char) {
-        self.push(Token::new(k, v));
-    }
 }
 
 pub struct Tokenizer {
@@ -67,6 +58,22 @@ impl Tokenizer {
         self.input.as_slice().char_at(self.position)
     }
 
+    pub fn take_while(&mut self, test: |char| -> bool) -> String {
+
+        let mut s = String::new();
+
+        loop {
+            if self.done() || !test(self.current_char()) {
+                break
+            } else {
+                s.push(self.current_char());
+                self.advance();
+            }
+        }
+
+        s
+    }
+
     pub fn advance(&mut self) {
         let range = self.input.as_slice().char_range_at(self.position);
         self.position = range.next;
@@ -77,7 +84,6 @@ impl Tokenizer {
     }
 
 }
-
 
 pub fn tokenize(input: String) -> TokenSink {
 
@@ -95,12 +101,26 @@ pub fn tokenize(input: String) -> TokenSink {
 
             let c = tokenizer.current_char();
 
-            let token_kind = if c.is_whitespace() { Whitespace } else {
+            let token = if c.is_whitespace() { Whitespace } else {
 
                 match c {
-                    'a' ... 'z' | 'A' ... 'Z' => Letter,
+                    'a' ... 'z' | 'A' ... 'Z' => {
+                        Word(tokenizer.take_while(|c| {
+                            match c {
+                                'a' ... 'z' | 'A' ... 'Z' => true,
+                                _ => false
+                            }
+                        }))
+                    },
                     '-' => Hyphen,
-                    '0' ... '9' => Digit,
+                    '0' ... '9' => {
+                        Integer(tokenizer.take_while(|c| {
+                            match c {
+                                '0' ... '9' => true,
+                                _ => false
+                            }
+                        }))
+                    },
                     '[' => OpeningBracket,
                     ']' => ClosingBracket,
                     '=' => Equal,
@@ -115,12 +135,18 @@ pub fn tokenize(input: String) -> TokenSink {
                     '+' => Plus,
                     '(' => OpeningParen,
                     ')' => ClosingParen,
+                    '"' => Quote,
                     _ => panic!("Unknown character {} in {}", c, tokenizer.input)
                 }
             };
 
-            tokenizer.token_sink.push_k_v(token_kind, c);
-            tokenizer.advance();
+            tokenizer.token_sink.push(token);
+
+            if !tokenizer.done() {
+                tokenizer.advance();
+            }
+
+
         }
 
     }

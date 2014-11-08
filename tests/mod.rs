@@ -1,13 +1,15 @@
+
+#![feature(globs)]
+
 extern crate csspie;
 
-use csspie::tokenizer::{Token, tokenize};
+use csspie::tokenizer::*;
 
 #[test]
 fn test_tokenizer_letters() {
-    let result = tokenize(String::from_str("abc")).tokens;
-    let expected = vec![Token::letter('a'),
-                        Token::letter('b'),
-                        Token::letter('c')];
+    let s = String::from_str("abc");
+    let result = tokenize(s.clone()).tokens;
+    let expected = vec![Word(s)];
 
     assert_eq!(result, expected);
 
@@ -16,7 +18,7 @@ fn test_tokenizer_letters() {
 #[test]
 fn test_tokenize_whitespace() {
     let result = tokenize(String::from_str(" ")).tokens;
-    let expected = vec![Token::whitespace()];
+    let expected = vec![Whitespace];
 
     assert_eq!(result, expected);
 
@@ -24,17 +26,9 @@ fn test_tokenize_whitespace() {
 
 #[test]
 fn test_tokenize_digits() {
-    let result = tokenize(String::from_str("0123456789")).tokens;
-    let expected = vec![Token::digit('0'),
-                        Token::digit('1'),
-                        Token::digit('2'),
-                        Token::digit('3'),
-                        Token::digit('4'),
-                        Token::digit('5'),
-                        Token::digit('6'),
-                        Token::digit('7'),
-                        Token::digit('8'),
-                        Token::digit('9')];
+    let s = String::from_str("0123456789");
+    let result = tokenize(s.clone()).tokens;
+    let expected = vec![Integer(s)];
 
     assert_eq!(result, expected);
 
@@ -43,21 +37,21 @@ fn test_tokenize_digits() {
 #[test]
 fn test_tokenize_specials() {
     let result = tokenize(String::from_str("*[]=~^$:.#>+()\"")).tokens;
-    let expected = vec![Token::star(),
-                        Token::opening_bracket(),
-                        Token::closing_bracket(),
-                        Token::equal(),
-                        Token::tilda(),
-                        Token::caret(),
-                        Token::dollar(),
-                        Token::colon(),
-                        Token::dot(),
-                        Token::hash_tag(),
-                        Token::greater_than(),
-                        Token::plus(),
-                        Token::opening_paren(),
-                        Token::closing_paren(),
-                        Token::quote()];
+    let expected = vec![Star,
+                        OpeningBracket,
+                        ClosingBracket,
+                        Equal,
+                        Tilda,
+                        Caret,
+                        DollarSign,
+                        Colon,
+                        Dot,
+                        HashTag,
+                        GreaterThan,
+                        Plus,
+                        OpeningParen,
+                        ClosingParen,
+                        Quote];
 
     assert_eq!(result, expected);
 
