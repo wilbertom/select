@@ -12,7 +12,7 @@
 ///
 
 // use std::option::Option;
-use selectable::Selectable;
+// use selectable::Selectable;
 
 // All sequence types that we will implement.
 // See the [spacification](http://dev.w3.org/csswg/selectors3/#selectors),

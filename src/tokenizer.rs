@@ -1,11 +1,9 @@
 use std::option::Option;
 
 #[deriving(PartialEq, Show)]
-pub enum TokenKind {
+pub enum Token {
     Whitespace,
-    Letter,
     Hyphen,
-    Digit,
     OpeningBracket,
     ClosingBracket,
     Equal,
@@ -18,100 +16,19 @@ pub enum TokenKind {
     HashTag,
     GreaterThan,
     Plus,
-    OpeningParen,
     ClosingParen,
-
-    Word,
-    Integer,
+    OpeningParen,
+    Quote,
+    Colons,
+    Word(&'static str),
+    Integer(&'static str),
 }
 
-#[deriving(PartialEq, Show)]
-pub struct Token {
-    pub kind: TokenKind,
-    pub value: char
-}
-
-impl Token {
-    pub fn new(kind: TokenKind, value: char) -> Token {
-        Token {
-            kind: kind, value: value
-        }
-    }
-
-    pub fn letter(c: char) -> Token {
-        Token::new(Letter, c)
-    }
-
-    pub fn whitespace() -> Token {
-        Token::new(Whitespace, ' ')
-    }
-
-    pub fn digit(c: char) -> Token {
-        Token::new(Digit, c)
-    }
-
-    pub fn tilda() -> Token {
-        Token::new(Tilda, '~')
-    }
-
-    pub fn star() -> Token {
-        Token::new(Star, '*')
-    }
-
-    pub fn dollar() -> Token {
-        Token::new(DollarSign, '$')
-    }
-
-    pub fn opening_bracket() -> Token {
-        Token::new(OpeningBracket, '[')
-    }
-
-    pub fn closing_bracket() -> Token {
-        Token::new(ClosingBracket, ']')
-    }
-
-    pub fn opening_paren() -> Token {
-        Token::new(OpeningParen, '(')
-    }
-
-    pub fn closing_paren() -> Token {
-        Token::new(ClosingParen, ')')
-    }
-
-    pub fn equal() -> Token {
-        Token::new(Equal, '=')
-    }
-
-    pub fn caret() -> Token {
-        Token::new(Caret, '^')
-    }
-
-    pub fn colon() -> Token {
-        Token::new(Colon, ':')
-    }
-
-    pub fn dot() -> Token {
-        Token::new(Dot, '.')
-    }
-
-    pub fn hash_tag() -> Token {
-        Token::new(HashTag, '#')
-    }
-
-    pub fn greater_than() -> Token {
-        Token::new(GreaterThan, '>')
-    }
-
-    pub fn plus() -> Token {
-        Token::new(Plus, '+')
-    }
-
-}
 
 #[deriving(PartialEq, Show)]
 pub struct TokenSink {
     pub tokens: Vec<Token>,
-    pub last_sunk: Option<Token>
+    last_sunk: Option<Token>
 }
 
 impl TokenSink {
@@ -128,17 +45,8 @@ impl TokenSink {
 
     pub fn push(&mut self, token: Token) {
 
-        // match self.last_sunk {
-        //     Some(t) => {
-        //         println!("Should check {}", t);
-        //     },
-        //     None => {
-        //         println!("Skipping");
-        //     }
-        // }
-        
-        self.last_sunk = Some(token);
-        self.tokens.push(token);
+        self.last_sunk = Some(new_token);
+        self.tokens.push(new_token);
 
     }
 

@@ -42,7 +42,7 @@ fn test_tokenize_digits() {
 
 #[test]
 fn test_tokenize_specials() {
-    let result = tokenize(String::from_str("*[]=~^$:.#>+()")).tokens;
+    let result = tokenize(String::from_str("*[]=~^$:.#>+()\"")).tokens;
     let expected = vec![Token::star(),
                         Token::opening_bracket(),
                         Token::closing_bracket(),
@@ -56,7 +56,8 @@ fn test_tokenize_specials() {
                         Token::greater_than(),
                         Token::plus(),
                         Token::opening_paren(),
-                        Token::closing_paren()];
+                        Token::closing_paren(),
+                        Token::quote()];
 
     assert_eq!(result, expected);
 
