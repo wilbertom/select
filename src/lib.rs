@@ -5,3 +5,4 @@
 pub mod tokenizer;
 pub mod selectable;
 pub mod parser;
+pub mod select_tree;
