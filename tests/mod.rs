@@ -35,7 +35,7 @@ fn test_tokenizer_underscore_in() {
 #[test]
 fn test_tokenize_whitespace() {
     let result = tokenize(String::from_str(" ")).tokens;
-    let expected = vec![Whitespace];
+    let expected = vec![Combinator(Whitespace)];
 
     assert_eq!(result, expected);
 
@@ -58,14 +58,14 @@ fn test_tokenize_specials() {
                         OpeningBracket,
                         ClosingBracket,
                         Equal,
-                        Tilda,
+                        Combinator(Tilde),
                         Caret,
                         DollarSign,
                         Colon,
                         Dot,
                         HashTag,
-                        GreaterThan,
-                        Plus,
+                        Combinator(GreaterThan),
+                        Combinator(Plus),
                         OpeningParen,
                         ClosingParen,
                         Quote,
@@ -94,7 +94,7 @@ fn test_tokenize_examples() {
     let results = vec![
       vec![
         Dot, Identifier(String::from_str("location")),
-        Whitespace, Identifier(String::from_str("a")),
+        Combinator(Whitespace), Identifier(String::from_str("a")),
         Colon, Identifier(String::from_str("first")),
         Hyphen, Identifier(String::from_str("child"))
       ],
@@ -102,7 +102,7 @@ fn test_tokenize_examples() {
       vec![Identifier(String::from_str("a"))],
 
       vec![
-        Dot, Identifier(String::from_str("block")), Whitespace,
+        Dot, Identifier(String::from_str("block")), Combinator(Whitespace),
         Identifier(String::from_str("a")), Dot,
         Identifier(String::from_str("current")), Dot,
         Identifier(String::from_str("trait"))
@@ -110,8 +110,8 @@ fn test_tokenize_examples() {
 
       vec![
         Dot, Identifier(String::from_str("_5bsm")),
-        Whitespace, Dot, Identifier(String::from_str("_50bm")),
-        Whitespace, Dot, Identifier(String::from_str("_po")),
+        Combinator(Whitespace), Dot, Identifier(String::from_str("_50bm")),
+        Combinator(Whitespace), Dot, Identifier(String::from_str("_po")),
         Hyphen
       ],
 
@@ -126,7 +126,7 @@ fn test_tokenize_examples() {
       ],
 
       vec![
-        Identifier(String::from_str("ul")), Whitespace,
+        Identifier(String::from_str("ul")), Combinator(Whitespace),
         Identifier(String::from_str("li")),
         Colon, Identifier(String::from_str("nth")), Hyphen,
         Identifier(String::from_str("child")), OpeningParen,
@@ -135,7 +135,7 @@ fn test_tokenize_examples() {
 
       vec![
         Identifier(String::from_str("span")), OpeningBracket,
-        Identifier(String::from_str("lang")), Tilda, Equal,
+        Identifier(String::from_str("lang")), Combinator(Tilde), Equal,
         Quote, Identifier(String::from_str("en")), Hyphen,
         Identifier(String::from_str("us")), Quote, ClosingBracket
       ]

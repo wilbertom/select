@@ -29,6 +29,7 @@ pub enum SequenceType {
     AttributeValueStartsWith(&'static str, &'static str, &'static str), // E[foo^="bar"]
     AttributeValueEndsWith(&'static str, &'static str, &'static str),   // E[foo$="bar"]
     AttributeValueContains(&'static str, &'static str, &'static str),   // E[foo*="bar"]
+    AtrributeValueList(&'static str, &'static str, &'static str),       // E[foo|="en"]
 
     // all pattern types with a `:` after the element
     Root(&'static str), // E:root
@@ -103,6 +104,7 @@ pub enum SequenceType {
 //         AttributeValueStartsWith(e, a, v) => Some(s.attribute_starts_with(e, a, v)),
 //         AttributeValueEndsWith(e, a, v) => Some(s.attribute_ends_with(e, a, v)),
 //         AttributeValueContains(e, a, v) => Some(s.attribute_contains(e, a, v)),
+//         AtrributeValueList(e, a, v)=> Some(s.attribute_list(e, a, v)),
 //         Root(e) => Some(s.root(e)),
 //         NthChild(e, i) => Some(s.nth_child(e, i)),
 //         NthLastChild(e, i) => Some(s.nth_last_child(e, i)),

@@ -1,26 +1,31 @@
 
 #[deriving(PartialEq, Show)]
-pub enum Token {
+pub enum CombinatorKind {
+    GreaterThan,
     Whitespace,
+    Plus,
+    Tilde
+}
+
+#[deriving(PartialEq, Show)]
+pub enum Token {
     Hyphen,
     OpeningBracket,
     ClosingBracket,
     Equal,
-    Tilda,
     Caret,
     DollarSign,
     Star,
     Colon,
     Dot,
     HashTag,
-    GreaterThan,
-    Plus,
     ClosingParen,
     OpeningParen,
     Quote,
     Colons,
     Identifier(String),
     Integer(String),
+    Combinator(CombinatorKind),
 }
 
 #[deriving(PartialEq, Show)]
@@ -102,7 +107,7 @@ pub fn tokenize(input: String) -> TokenSink {
             let c = tokenizer.current_char();
             let mut advanced_already = false;
 
-            let token = if c.is_whitespace() { Whitespace } else {
+            let token = if c.is_whitespace() { Combinator(Whitespace) } else {
 
                 match c {
                     '_' | 'a' ... 'z' | 'A' ... 'Z' => {
@@ -127,18 +132,18 @@ pub fn tokenize(input: String) -> TokenSink {
                     '[' => OpeningBracket,
                     ']' => ClosingBracket,
                     '=' => Equal,
-                    '~' => Tilda,
                     '^' => Caret,
                     '$' => DollarSign,
                     '*' => Star,
                     ':' => Colon,
                     '.' => Dot,
                     '#' => HashTag,
-                    '>' => GreaterThan,
-                    '+' => Plus,
                     '(' => OpeningParen,
                     ')' => ClosingParen,
                     '"' => Quote,
+                    '>' => Combinator(GreaterThan),
+                    '+' => Combinator(Plus),
+                    '~' => Combinator(Tilde),
                     _ => panic!("Unknown character {} in {}", c, tokenizer.input)
                 }
             };
