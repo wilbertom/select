@@ -19,7 +19,7 @@ pub enum Token {
     OpeningParen,
     Quote,
     Colons,
-    Word(String),
+    Identifier(String),
     Integer(String),
 }
 
@@ -104,10 +104,10 @@ pub fn tokenize(input: String) -> TokenSink {
             let token = if c.is_whitespace() { Whitespace } else {
 
                 match c {
-                    'a' ... 'z' | 'A' ... 'Z' => {
-                        Word(tokenizer.take_while(|c| {
+                    '_' | 'a' ... 'z' | 'A' ... 'Z' => {
+                        Identifier(tokenizer.take_while(|c| {
                             match c {
-                                'a' ... 'z' | 'A' ... 'Z' => true,
+                                '0' ... '9' | '_' | 'a' ... 'z' | 'A' ... 'Z' => true,
                                 _ => false
                             }
                         }))

@@ -1,4 +1,3 @@
-
 #![feature(globs)]
 
 extern crate csspie;
@@ -7,12 +6,30 @@ use csspie::tokenizer::*;
 
 #[test]
 fn test_tokenizer_letters() {
-    let s = String::from_str("abc");
+    let s = String::from_str("abc23");
     let result = tokenize(s.clone()).tokens;
-    let expected = vec![Word(s)];
+    let expected = vec![Identifier(s)];
 
     assert_eq!(result, expected);
+}
 
+#[test]
+fn test_tokenizer_underscore_start() {
+    let s = String::from_str("_abc_12_");
+    let result = tokenize(s.clone()).tokens;
+    let expected = vec![Identifier(s)];
+
+    assert_eq!(result, expected);
+}
+
+
+#[test]
+fn test_tokenizer_underscore_in() {
+    let s = String::from_str("abc_12");
+    let result = tokenize(s.clone()).tokens;
+    let expected = vec![Identifier(s)];
+
+    assert_eq!(result, expected);
 }
 
 #[test]
@@ -36,7 +53,7 @@ fn test_tokenize_digits() {
 
 #[test]
 fn test_tokenize_specials() {
-    let result = tokenize(String::from_str("*[]=~^$:.#>+()\"")).tokens;
+    let result = tokenize(String::from_str("*[]=~^$:.#>+()\"-")).tokens;
     let expected = vec![Star,
                         OpeningBracket,
                         ClosingBracket,
@@ -51,7 +68,8 @@ fn test_tokenize_specials() {
                         Plus,
                         OpeningParen,
                         ClosingParen,
-                        Quote];
+                        Quote,
+                        Hyphen];
 
     assert_eq!(result, expected);
 
