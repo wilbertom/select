@@ -100,11 +100,13 @@ pub fn tokenize(input: String) -> TokenSink {
         } else {
 
             let c = tokenizer.current_char();
+            let mut advanced_already = false;
 
             let token = if c.is_whitespace() { Whitespace } else {
 
                 match c {
                     '_' | 'a' ... 'z' | 'A' ... 'Z' => {
+                        advanced_already = true;
                         Identifier(tokenizer.take_while(|c| {
                             match c {
                                 '0' ... '9' | '_' | 'a' ... 'z' | 'A' ... 'Z' => true,
@@ -114,6 +116,7 @@ pub fn tokenize(input: String) -> TokenSink {
                     },
                     '-' => Hyphen,
                     '0' ... '9' => {
+                        advanced_already = true;
                         Integer(tokenizer.take_while(|c| {
                             match c {
                                 '0' ... '9' => true,
@@ -142,7 +145,7 @@ pub fn tokenize(input: String) -> TokenSink {
 
             tokenizer.token_sink.push(token);
 
-            if !tokenizer.done() {
+            if !tokenizer.done() && !advanced_already {
                 tokenizer.advance();
             }
 
