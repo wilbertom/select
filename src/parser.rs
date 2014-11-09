@@ -19,14 +19,14 @@
 // it has a nice table with what all of this means
 pub enum SequenceType {
 
-    Star,          // *
+    Universal,          // *
     Element(&'static str),   // E
 
     // all pattern types related to attributes
     Attribute(&'static str, &'static str),                              // E[foo]
     AttributeValue(&'static str, &'static str, &'static str),           // E[foo="bar"]
     AttributeValueIn(&'static str, &'static str, &'static str),         // E[foo~="bar"]
-    AttributeValueStartsWith(&'static str, &'static str, &'static str), // E[foo^="bar"]
+    AttributeValueUniversaltsWith(&'static str, &'static str, &'static str), // E[foo^="bar"]
     AttributeValueEndsWith(&'static str, &'static str, &'static str),   // E[foo$="bar"]
     AttributeValueContains(&'static str, &'static str, &'static str),   // E[foo*="bar"]
     AtrributeValueList(&'static str, &'static str, &'static str),       // E[foo|="en"]
@@ -88,7 +88,7 @@ pub enum SequenceType {
 
 // fn html_pie_parse(expr: &'static str) -> SequenceType {
 //     match expr {
-//         "*" => Star,
+//         "*" => Universal,
 //         _ => Unknown
 //     }
 // }
@@ -96,12 +96,12 @@ pub enum SequenceType {
 // fn html_pie_query<T: Selectable>(st: SequenceType, s: T) -> Option<(T)> {
 //
 //     match st {
-//         Star => Some(s.star()),
+//         Universal => Some(s.Universal()),
 //         Element(e) => Some(s.element(e)),
 //         Attribute(e, a) => Some(s.has_attribute(e, a)),
 //         AttributeValue(e, a, v) => Some(s.attribute_with_value(e, a, v)),
 //         AttributeValueIn(e, a, v) => Some(s.attribute_in(e, a, v)),
-//         AttributeValueStartsWith(e, a, v) => Some(s.attribute_starts_with(e, a, v)),
+//         AttributeValueUniversaltsWith(e, a, v) => Some(s.attribute_Universalts_with(e, a, v)),
 //         AttributeValueEndsWith(e, a, v) => Some(s.attribute_ends_with(e, a, v)),
 //         AttributeValueContains(e, a, v) => Some(s.attribute_contains(e, a, v)),
 //         AtrributeValueList(e, a, v)=> Some(s.attribute_list(e, a, v)),

@@ -1,9 +1,9 @@
 [package]
 
-name = "csspie"
+name = "select"
 version = "0.0.1"
 authors = ["Wilberto Morales <wilbertomorales777@gmail.com>"]
 
 
 [[bin]]
-name = "csspie"
+name = "select"

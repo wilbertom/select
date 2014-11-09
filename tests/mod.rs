@@ -1,8 +1,8 @@
 #![feature(globs)]
 
-extern crate csspie;
+extern crate select;
 
-use csspie::tokenizer::*;
+use select::tokenizer::*;
 
 #[test]
 fn test_tokenizer_letters() {
@@ -14,7 +14,7 @@ fn test_tokenizer_letters() {
 }
 
 #[test]
-fn test_tokenizer_underscore_Universalt() {
+fn test_tokenizer_underscore_start() {
     let s = String::from_str("_abc_12_");
     let result = tokenize(s.clone()).tokens;
     let expected = vec![Identifier(s)];

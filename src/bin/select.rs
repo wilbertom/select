@@ -1,8 +1,8 @@
 
-extern crate csspie;
+extern crate select;
 
 use std::os::args;
-use csspie::tokenizer;
+use select::tokenizer;
 
 fn main() {
     let arguments = args();

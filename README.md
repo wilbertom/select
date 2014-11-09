@@ -1,4 +1,4 @@
-CssPie
+Select
 ===
 
 CSS selector engine for the future.
