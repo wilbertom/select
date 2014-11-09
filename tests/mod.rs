@@ -14,7 +14,7 @@ fn test_tokenizer_letters() {
 }
 
 #[test]
-fn test_tokenizer_underscore_start() {
+fn test_tokenizer_underscore_Universalt() {
     let s = String::from_str("_abc_12_");
     let result = tokenize(s.clone()).tokens;
     let expected = vec![Identifier(s)];
@@ -54,7 +54,7 @@ fn test_tokenize_digits() {
 #[test]
 fn test_tokenize_specials() {
     let result = tokenize(String::from_str("*[]=~^$:.#>+()\"-")).tokens;
-    let expected = vec![Star,
+    let expected = vec![Universal,
                         OpeningBracket,
                         ClosingBracket,
                         Equal,
