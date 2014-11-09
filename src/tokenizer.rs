@@ -144,7 +144,16 @@ pub fn tokenize(input: String) -> TokenSink {
                     '>' => Combinator(GreaterThan),
                     '+' => Combinator(Plus),
                     '~' => Combinator(Tilde),
-                    _ => panic!("Unknown character {} in {}", c, tokenizer.input)
+                    _ => {
+
+
+                        if c == ',' {
+                            panic!("Found a \",\" but grouped selectors aren't supported yet!");
+                        } else {
+                            panic!("Unknown character \"{}\" in \"{}\"", c, tokenizer.input);
+
+                        }
+                    }
                 }
             };
 
