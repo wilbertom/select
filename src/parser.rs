@@ -12,7 +12,8 @@
 ///
 
 // use std::option::Option;
-// use selectable::Selectable;
+use selectable::Selectable;
+use tokenizer;
 
 // All sequence types that we will implement.
 // See the [spacification](http://dev.w3.org/csswg/selectors3/#selectors),
@@ -86,12 +87,13 @@ pub enum SequenceType {
     Unknown
 }
 
-// fn html_pie_parse(expr: &'static str) -> SequenceType {
-//     match expr {
-//         "*" => Universal,
-//         _ => Unknown
-//     }
-// }
+fn html_pie_parse(expr: &'static str) -> SequenceType {
+    match expr {
+        "*" => Universal,
+        _ => Unknown
+    }
+}
+
 //
 // fn html_pie_query<T: Selectable>(st: SequenceType, s: T) -> Option<(T)> {
 //

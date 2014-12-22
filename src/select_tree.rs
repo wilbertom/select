@@ -8,8 +8,9 @@
 ///
 
 use std::collections::HashMap;
+use selectable::Selectable;
 
-#[deriving(PartialEq, Show, Decodable, Encodable)]
+#[deriving(PartialEq, Show)]
 pub struct SelectTree {
     pub id: Option<&'static str>,
     pub kind: &'static str,
@@ -25,5 +26,12 @@ impl SelectTree {
             children: vec![],
             attributes: HashMap::new()
         }
+    }
+}
+
+
+impl Selectable for SelectTree {
+    fn element(&self, s: &'static str) -> Vec<SelectTree> {
+        vec![SelectTree::new("hello")]
     }
 }

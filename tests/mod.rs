@@ -2,7 +2,10 @@
 
 extern crate select;
 
+use std::collections::HashMap;
+
 use select::tokenizer::*;
+use select::select_tree::SelectTree;
 
 #[test]
 fn test_tokenizer_letters() {
@@ -145,4 +148,22 @@ fn test_tokenize_examples() {
     for (example, result) in examples.iter().zip(results.iter()) {
         assert_eq!(tokenize(example.clone()).tokens, *result);
     }
+}
+
+#[test]
+fn test_seleting_element() {
+
+    let select_data = SelectTree {
+        id: None,
+        kind: "root",
+        children: vec![
+          SelectTree {id: None, kind: "person", children: vec![], attributes: HashMap::new()},
+          SelectTree {id: None, kind: "person", children: vec![], attributes: HashMap::new()},
+          SelectTree {id: None, kind: "person", children: vec![], attributes: HashMap::new()},
+          SelectTree {id: None, kind: "person", children: vec![], attributes: HashMap::new()},
+        ],
+        attributes: HashMap::new()
+    };
+
+
 }
